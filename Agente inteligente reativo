@@ -1,0 +1,76 @@
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Random;
+
+public class AgenteInteligenteReativo implements Observer {
+
+    private int estadoAtual;
+    private final int NUM_ESTADOS = 3;
+
+    public AgenteInteligenteReativo() {
+        this.estadoAtual = 0;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // Obter a ação do ambiente
+        int acaoAmbiente = (int) arg;
+
+        // Atualizar o estado atual com base na ação do ambiente
+        estadoAtual = (estadoAtual + acaoAmbiente) % NUM_ESTADOS;
+
+        // Tomar uma decisão com base no estado atual
+        int decisao = tomarDecisao(estadoAtual);
+
+        // Executar a ação
+        executarAcao(decisao);
+    }
+
+    private int tomarDecisao(int estadoAtual) {
+        // Simular a tomada de decisão do agente
+        switch (estadoAtual) {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    private void executarAcao(int decisao) {
+        // Simular a execução da ação
+        System.out.println("Agente decide: " + decisao);
+    }
+
+    public static void main(String[] args) {
+        // Criar o ambiente
+        Ambiente ambiente = new Ambiente();
+
+        // Criar o agente
+        AgenteInteligenteReativo agente = new AgenteInteligenteReativo();
+
+        // Registrar o agente como observador do ambiente
+        ambiente.addObserver(agente);
+
+        // Simular a execução do ambiente por 10 iterações
+        for (int i = 0; i < 10; i++) {
+            ambiente.gerarAcao();
+        }
+    }
+}
+
+class Ambiente extends Observable {
+    private final Random random = new Random();
+
+    public void gerarAcao() {
+        // Simular a ação do ambiente
+        int acaoAmbiente = random.nextInt(3);
+
+        // Notificar o agente sobre a ação do ambiente
+        setChanged();
+        notifyObservers(acaoAmbiente);
+    }
+}

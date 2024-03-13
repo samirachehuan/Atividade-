@@ -1,0 +1,59 @@
+import java.util.Random;
+
+public class AgenteInteligente {
+
+    private int estadoAtual;
+    private static final int NUM_ESTADOS = 3;
+
+    public AgenteInteligente() {
+        this.estadoAtual = 0;
+    }
+
+    public void agir() {
+        // Obter a ação do ambiente
+        int acaoAmbiente = getAcaoDoAmbiente();
+
+        // Atualizar o estado atual com base na ação do ambiente
+        estadoAtual = (estadoAtual + acaoAmbiente) % NUM_ESTADOS;
+
+        // Tomar uma decisão com base no estado atual
+        int decisao = tomarDecisao(estadoAtual);
+
+        // Executar a ação
+        executarAcao(decisao);
+    }
+
+    private int getAcaoDoAmbiente() {
+        // Simular a ação do ambiente
+        Random random = new Random();
+        return random.nextInt(NUM_ESTADOS);
+    }
+
+    private int tomarDecisao(int estadoAtual) {
+        // Simular a tomada de decisão do agente
+        switch (estadoAtual) {
+            case 0:
+                return 1;
+            case 1:
+                return 2;
+            case 2:
+                return 0;
+            default:
+                return 0;
+        }
+    }
+
+    private void executarAcao(int decisao) {
+        // Simular a execução da ação
+        System.out.println("Agente decide: " + decisao);
+    }
+
+    public static void main(String[] args) {
+        AgenteInteligente agente = new AgenteInteligente();
+
+        // Simular a execução do agente por 10 iterações
+        for (int i = 0; i < 10; i++) {
+            agente.agir();
+        }
+    }
+}

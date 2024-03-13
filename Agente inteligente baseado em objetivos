@@ -1,0 +1,113 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class AgenteInteligenteBaseadoEmObjetivos {
+
+    private List<Objetivo> objetivos;
+    private Mundo mundo;
+
+    public AgenteInteligenteBaseadoEmObjetivos(List<Objetivo> objetivos, Mundo mundo) {
+        this.objetivos = objetivos;
+        this.mundo = mundo;
+    }
+
+    public void agir() {
+        // Selecionar o objetivo mais relevante
+        Objetivo objetivo = selecionarObjetivo();
+
+        // Gerar um plano para alcançar o objetivo
+        Plano plano = gerarPlano(objetivo);
+
+        // Executar o plano
+        executarPlano(plano);
+    }
+
+    private Objetivo selecionarObjetivo() {
+        // Implementar a lógica de seleção de objetivo
+        // Por enquanto, apenas retorna o primeiro objetivo
+        return objetivos.get(0);
+    }
+
+    private Plano gerarPlano(Objetivo objetivo) {
+        // Implementar a lógica de geração de plano
+        // Por enquanto, retorna um plano vazio
+        return new Plano();
+    }
+
+    private void executarPlano(Plano plano) {
+        // Implementar a lógica de execução de plano
+        for (Acao acao : plano.getAcoes()) {
+            acao.executar(mundo);
+        }
+    }
+
+    public static void main(String[] args) {
+        // Criar o mundo
+        Mundo mundo = new Mundo();
+
+        // Criar os objetivos
+        List<Objetivo> objetivos = Arrays.asList(
+                new Objetivo("Limpar a casa"),
+                new Objetivo("Cozinhar o jantar"),
+                new Objetivo("Fazer compras")
+        );
+
+        // Criar o agente
+        AgenteInteligenteBaseadoEmObjetivos agente = new AgenteInteligenteBaseadoEmObjetivos(objetivos, mundo);
+
+        // Simular a execução do agente por 10 iterações
+        for (int i = 0; i < 10; i++) {
+            agente.agir();
+        }
+    }
+}
+
+class Objetivo {
+
+    private String nome;
+
+    public Objetivo(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+}
+
+class Plano {
+
+    private List<Acao> acoes;
+
+    public Plano() {
+        this.acoes = new ArrayList<>(); // Agora inicializa uma lista vazia
+    }
+
+    public List<Acao> getAcoes() {
+        return acoes;
+    }
+}
+
+class Acao {
+
+    private String nome;
+
+    public Acao(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void executar(Mundo mundo) {
+        // Implementar a lógica de execução da ação
+        System.out.println("Executando ação: " + nome);
+    }
+}
+
+class Mundo {
+
+    // Implementar a lógica do mundo
+}
